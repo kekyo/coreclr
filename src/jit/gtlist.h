@@ -247,6 +247,7 @@ GTNODE(PUTARG_STK   , "putarg_stk"    ,0,GTK_UNOP)              // operator that
 GTNODE(RETURNTRAP   , "returnTrap"    ,0,GTK_UNOP|GTK_NOVALUE)  // a conditional call to wait on gc
 GTNODE(SWAP         , "swap"          ,0,GTK_BINOP|GTK_NOVALUE) // op1 and op2 swap (registers)
 GTNODE(IL_OFFSET    , "il_offset"     ,0,GTK_LEAF|GTK_NOVALUE)  // marks an IL offset for debugging purposes
+GTNODE(CUSTOMCODE   , "customcode"    ,0,GTK_SPECIAL|GTK_NOVALUE)
 
 /*****************************************************************************/
 #undef  GTNODE

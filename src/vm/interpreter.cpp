@@ -3255,6 +3255,11 @@ EvalLoop:
             m_ILCodePtr++;
             continue;
 
+		case CEE_CUSTOMCODE:
+			::OutputDebugStringW(L"Triggered custom code!!!!!!! (for interpreter)");
+			m_ILCodePtr++;
+			continue;
+
         default:
             UNREACHABLE();
             continue;

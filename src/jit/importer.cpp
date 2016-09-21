@@ -14365,6 +14365,10 @@ void Compiler::impImportBlockCode(BasicBlock* block)
                 op1 = gtNewHelperCallNode(CORINFO_HELP_USER_BREAKPOINT, TYP_VOID);
                 goto SPILL_APPEND;
 
+			case CEE_CUSTOMCODE:
+				op1 = gtNewHelperCallNode(CORINFO_HELP_CUSTOMCODE, TYP_VOID);
+				goto SPILL_APPEND;
+
             case CEE_NOP:
                 if (opts.compDbgCode)
                 {

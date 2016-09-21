@@ -793,6 +793,7 @@ const BYTE* ILFormatter::formatStatement(const BYTE* instrPtr, OutString* out) {
             case CEE_LDFTN:
             case CEE_LDTOKEN:
             case CEE_SIZEOF:
+			case CEE_CUSTOMCODE:
             default:
                 result << op.getName();
                 if (op.getArgsInfo() != InlineNone) {

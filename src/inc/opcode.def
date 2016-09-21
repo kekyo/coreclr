@@ -327,6 +327,7 @@ OPDEF(CEE_UNUSED53,                   "unused",           Pop0,               Pu
 OPDEF(CEE_UNUSED54,                   "unused",           Pop0,               Push0,       InlineNone,         IPrimitive,  2,  0xFE,    0x20,    NEXT)
 OPDEF(CEE_UNUSED55,                   "unused",           Pop0,               Push0,       InlineNone,         IPrimitive,  2,  0xFE,    0x21,    NEXT)
 OPDEF(CEE_UNUSED70,                   "unused",           Pop0,               Push0,       InlineNone,         IPrimitive,  2,  0xFE,    0x22,    NEXT)
+OPDEF(CEE_CUSTOMCODE,                 "customcode",       Pop0,               Push0,       InlineNone,         IPrimitive,  2,  0xFE,    0x23,    NEXT)
 
 // These are not real opcodes, but they are handy internally in the EE
 

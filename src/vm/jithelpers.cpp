@@ -6188,6 +6188,22 @@ HCIMPL0(void, JIT_UserBreakpoint)
 }
 HCIMPLEND
 
+
+
+HCIMPL0(void, JIT_CustomCode)
+{
+    FCALL_CONTRACT;
+
+    HELPER_METHOD_FRAME_BEGIN_NOPOLL();    // Set up a frame
+
+	::OutputDebugStringW(L"Triggered custom code!!!!!!! (for JIT)");
+	
+    HELPER_METHOD_FRAME_END_POLL();
+}
+HCIMPLEND
+
+
+
 #if defined(_MSC_VER)
 // VC++ Compiler intrinsic.
 extern "C" void * _ReturnAddress(void);

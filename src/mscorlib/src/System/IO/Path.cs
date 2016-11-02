@@ -1428,6 +1428,57 @@ namespace System.IO {
                 return path1 + DirectorySeparatorCharAsString + path2;
             return path1 + path2;
         }
-            
+
+        public static String MakeFullPath(String basePath, String relativeOrAbsolutePath) {
+            if (basePath == null)
+                throw new ArgumentNullException("basePath");
+            if (relativeOrAbsolutePath == null)
+                throw new ArgumentNullException("relativeOrAbsolutePath");
+            Contract.EndContractBlock();
+            CheckInvalidPathChars(basePath);
+            CheckInvalidPathChars(relativeOrAbsolutePath);
+
+            if (IsPathRooted(relativeOrAbsolutePath)) return relativeOrAbsolutePath;
+
+            String combinedPath = InternalCombine(basePath, relativeOrAbsolutePath);
+            if (IsPathRooted(combinedPath)) return combinedPath;
+
+            String fullPath = GetFullPath(combinedPath);
+            return fullPath;
+        }
+
+        public static String MakeRelativePath(String basePath, String relativeOrAbsolutePath) {
+            if (basePath == null)
+                throw new ArgumentNullException("basePath");
+            if (relativeOrAbsolutePath == null)
+                throw new ArgumentNullException("relativeOrAbsolutePath");
+            Contract.EndContractBlock();
+            CheckInvalidPathChars(basePath);
+            CheckInvalidPathChars(relativeOrAbsolutePath);
+
+            // p11: "C:\Windows", "C:\Windows\notepad.exe" --> "notepad.exe"
+            // p12: "C:\Windows", "C:\Windows\System32\notepad.exe" --> "System32\notepad.exe"
+            // p13: "C:\Windows", "C:\notepad.exe" --> "..\notepad.exe"
+            // p14: "C:\Windows", "C:\Another\notepad.exe" --> "..\Another\notepad.exe"
+            // p15: "C:\Windows", "D:\Windows\notepad.exe" --> "D:\Windows\notepad.exe"
+            // p16: "C:\Windows", "\\server\share\Windows\notepad.exe" --> "\\server\share\Windows\notepad.exe"
+
+            // p21: "Windows", "C:\Windows\notepad.exe" --> "C:\Windows\notepad.exe"
+            // p22: "Windows", "notepad.exe" --> "notepad.exe"
+            // p23: "Windows", "System32\notepad.exe" --> "System32\notepad.exe"
+            // p24: "Windows", "..\notepad.exe" --> "..\notepad.exe"
+            // p25: "Windows", "..\Another\notepad.exe" --> "..\Another\notepad.exe"
+            // p26: "Windows", "\\server\share\Windows\notepad.exe" --> "\\server\share\Windows\notepad.exe"
+
+            // p31: "\\server\share\Windows", "\\server\share\Windows\notepad.exe" --> "notepad.exe"
+            // p32: "\\server\share\Windows", "\\server\share\Windows\System32\notepad.exe" --> "System32\notepad.exe"
+            // p33: "\\server\share\Windows", "\\server\share\notepad.exe" --> "..\notepad.exe"
+            // p34: "\\server\share\Windows", "\\server\another\Windows\notepad.exe" --> "\\server\another\Windows\notepad.exe"
+            // p35: "\\server\share\Windows", "\\another\share\Windows\notepad.exe" --> "\\another\share\Windows\notepad.exe"
+            // p36: "\\server\share\Windows", "C:\Windows\notepad.exe" --> "C:\Windows\notepad.exe"
+            // p37: "\\server\share\Windows", "notepad.exe" --> "notepad.exe"
+            // p38: "\\server\share\Windows", "System32\notepad.exe" --> "System32\notepad.exe"
+            // p39: "\\server\share\Windows", "..\notepad.exe" --> "..\notepad.exe"
+        }
     }
 }
